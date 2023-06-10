@@ -20,6 +20,7 @@ import { getCharacters } from "../lib/api";
 import defaultImage from "../assets/default.jpeg";
 import { truncateString } from "../lib/util";
 import { useState } from "react";
+import { set } from "react-native-reanimated";
 
 const isIOS = Platform.OS === "ios";
 const isAndroid = Platform.OS === "android";
@@ -27,12 +28,13 @@ const isAndroid = Platform.OS === "android";
 export default function Page() {
   const status = ["Alive", "Dead", "Unknown"];
   const [page, setPage] = useState<number>(1);
+  const [statusState, setStatusState] = useState<string>("");
 
   const { width: w, height: h } = useWindowDimensions();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["characters", page],
-    queryFn: () => getCharacters(page),
+    queryKey: ["characters", page, statusState],
+    queryFn: () => getCharacters(page, statusState),
   });
 
   return (
@@ -62,25 +64,42 @@ export default function Page() {
           <Text className="text-white text-3xl font-semibold">Status</Text>
         </View>
 
-        <FlatList
-          data={status}
-          renderItem={(a) => {
-            return (
-              <TouchableOpacity
-                onPress={() => {
-                  console.log(a.item);
-                }}
-              >
-                <View className="flex flex-row items-center justify-between  border-2 border-morty my-2 mr-3 rounded-xl">
-                  <Text className="text-morty p-2 py-1 text-base">
-                    {a.item}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-          horizontal
-        />
+        <View className="flex flex-row justify-between items-center">
+          <FlatList
+            data={status}
+            renderItem={(a) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    setPage(1);
+                    setStatusState(a.item.toLocaleLowerCase());
+                  }}
+                >
+                  <View
+                    className={`flex flex-row items-center justify-between  border-2 border-morty my-2 mr-3 rounded-xl ${
+                      statusState !== a.item.toLocaleLowerCase() && "opacity-50"
+                    }`}
+                  >
+                    <Text className="text-morty p-2 py-1 text-base">
+                      {a.item}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+            horizontal
+          />
+          {statusState !== "" && (
+            <TouchableOpacity
+              onPress={() => {
+                setPage(1);
+                setStatusState("");
+              }}
+            >
+              <Text className="text-morty">Clear</Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
 
       <View className="mx-4 my-5">
