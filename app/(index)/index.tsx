@@ -126,7 +126,31 @@ export default function Page() {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    router.push(`/character/${item.id}`);
+                    const params = {
+                      id: item.id,
+                      name: item.name,
+                      image:
+                        item.image.split("/")[item.image.split("/").length - 1],
+                      status: item.status,
+                      species: item.species,
+                      type: item.type,
+                      gender: item.gender,
+                      originName: item.origin.name,
+                      originId:
+                        item.origin.url.split("/")[
+                          item.origin.url.split("/").length - 1
+                        ],
+                      locationName: item.location.name,
+                      locationId:
+                        item.location.url.split("/")[
+                          item.location.url.split("/").length - 1
+                        ],
+                    };
+
+                    router.push({
+                      pathname: `/character/${item.id}`,
+                      params,
+                    });
                   }}
                 >
                   <View className="mr-3 ml-1 mt-4">

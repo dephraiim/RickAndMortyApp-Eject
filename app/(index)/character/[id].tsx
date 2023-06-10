@@ -1,33 +1,57 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Stack, useLocalSearchParams } from "expo-router";
+import { Image, View, useWindowDimensions } from "react-native";
+import defaultImage from "../../../assets/default.jpeg";
+
+type Params = {
+  id: string;
+  name: string;
+  image: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  originName: string;
+  originId: string;
+  locationName: string;
+  locationId: string;
+};
 
 export default function Page() {
+  const { id, name } = useLocalSearchParams<Params>();
+  const { width: w, height: h } = useWindowDimensions();
+
+  const url = `https://rickandmortyapi.com/api/character/avatar/${id}.jpeg`;
+
   return (
-    <View style={styles.container}>
-      <View style={styles.main}>
-        <Text style={styles.title}>Character</Text>
+    <>
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTitle: name,
+          headerStyle: {
+            backgroundColor: "#000",
+          },
+          headerTitleStyle: {
+            color: "white",
+            fontSize: 20,
+            fontWeight: "bold",
+          },
+          headerTintColor: "#52af38",
+        }}
+      />
+      <View className="bg-black flex-1 py-4">
+        <Image
+          style={{
+            width: w * 0.9,
+            height: w * 0.9,
+            borderRadius: 30,
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+          source={{ uri: url }}
+          loadingIndicatorSource={defaultImage}
+        />
       </View>
-    </View>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    padding: 24,
-  },
-  main: {
-    flex: 1,
-    justifyContent: "center",
-    maxWidth: 960,
-    marginHorizontal: "auto",
-  },
-  title: {
-    fontSize: 64,
-    fontWeight: "bold",
-  },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
-  },
-});

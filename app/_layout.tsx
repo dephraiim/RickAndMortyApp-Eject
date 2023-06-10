@@ -56,6 +56,9 @@ export default function Layout() {
             tabBarIcon: ({ color, size }) => {
               return <MapPinIcon color={color} size={size} />;
             },
+            tabBarStyle: {
+              backgroundColor: "#0faec7",
+            },
           }}
         />
         <Tabs.Screen

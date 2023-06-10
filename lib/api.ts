@@ -53,3 +53,21 @@ export const getCharacters = async (
     throw error;
   }
 };
+
+export const getCharacter = async (id: string): Promise<Character> => {
+  const parseId = id.toString();
+  const url = `https://rickandmortyapi.com/api/character/${parseId}`;
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data: Character = await res.json();
+    return data;
+  } catch (error) {
+    console.error(`There was a problem fetching the data: ${error.message}`);
+    throw error;
+  }
+};
