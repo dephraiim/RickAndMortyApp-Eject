@@ -38,13 +38,14 @@ export default function Layout() {
           tabBarStyle: {
             backgroundColor: "#52af38",
             borderTopWidth: 0,
+            borderBottomWidth: 0,
           },
         }}
       >
         <Tabs.Screen
-          name="index"
+          name="(index)"
           options={{
-            tabBarIcon: ({ focused, color, size }) => {
+            tabBarIcon: ({ color, size }) => {
               return <UserCircleIcon color={color} size={size} />;
             },
           }}
@@ -52,7 +53,7 @@ export default function Layout() {
         <Tabs.Screen
           name="location"
           options={{
-            tabBarIcon: ({ focused, color, size }) => {
+            tabBarIcon: ({ color, size }) => {
               return <MapPinIcon color={color} size={size} />;
             },
           }}
@@ -60,7 +61,7 @@ export default function Layout() {
         <Tabs.Screen
           name="episode"
           options={{
-            tabBarIcon: ({ focused, color, size }) => {
+            tabBarIcon: ({ color, size }) => {
               return <FilmIcon color={color} size={size} />;
             },
           }}

@@ -16,11 +16,13 @@ import {
   MagnifyingGlassIcon,
 } from "react-native-heroicons/outline";
 import { useQuery } from "@tanstack/react-query";
-import { getCharacters } from "../lib/api";
-import defaultImage from "../assets/default.jpeg";
-import { truncateString } from "../lib/util";
+import { getCharacters } from "../../lib/api";
+import defaultImage from "../../assets/default.jpeg";
+import { truncateString } from "../../lib/util";
 import { useState } from "react";
-import { set } from "react-native-reanimated";
+import { useRouter } from "expo-router";
+
+// TODO: Option to Save characters/Bookmark Characters
 
 const isIOS = Platform.OS === "ios";
 const isAndroid = Platform.OS === "android";
@@ -29,6 +31,7 @@ export default function Page() {
   const status = ["Alive", "Dead", "Unknown"];
   const [page, setPage] = useState<number>(1);
   const [statusState, setStatusState] = useState<string>("");
+  const router = useRouter();
 
   const { width: w, height: h } = useWindowDimensions();
 
@@ -123,7 +126,7 @@ export default function Page() {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    console.log(item);
+                    router.push(`/character/${item.id}`);
                   }}
                 >
                   <View className="mr-3 ml-1 mt-4">
