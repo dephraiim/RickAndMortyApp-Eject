@@ -11,9 +11,9 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
-import {} from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
 import { getCharacters } from "../lib/api";
+import defaultImage from "../assets/default.jpeg";
 
 const isIOS = Platform.OS === "ios";
 const isAndroid = Platform.OS === "android";
@@ -75,8 +75,6 @@ export default function Page() {
         />
       </View>
 
-      {/* Characters */}
-
       <View className="mx-4 my-5">
         <View>
           <Text className="text-white text-3xl font-semibold">Characters</Text>
@@ -87,7 +85,7 @@ export default function Page() {
         {!isLoading && data && !error && (
           <FlatList
             data={data.results}
-            style={{ marginBottom: h * 0.2 }}
+            style={{ marginBottom: h * 0.2, marginTop: 10 }}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
@@ -103,6 +101,7 @@ export default function Page() {
                         borderRadius: 10,
                       }}
                       source={{ uri: item.image }}
+                      loadingIndicatorSource={defaultImage}
                     />
                     <View className="flex flex-row items-center justify-between mt-1">
                       <Text className="text-white text-lg font-semibold">
@@ -122,6 +121,7 @@ export default function Page() {
                 </TouchableOpacity>
               );
             }}
+            keyExtractor={(item) => item.id.toString() + item.name}
             showsVerticalScrollIndicator={false}
             numColumns={2}
           />
