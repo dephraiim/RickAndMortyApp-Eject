@@ -88,7 +88,11 @@ export default function Page() {
           <Text className="text-white text-3xl font-semibold">Characters</Text>
         </View>
 
-        {isLoading && <ActivityIndicator color="#fff" size="large" />}
+        {isLoading && (
+          <View className="mt-60">
+            <ActivityIndicator color="#fff" size="large" />
+          </View>
+        )}
 
         {/* TODO: Error Component */}
 
