@@ -67,6 +67,9 @@ export default function Layout() {
             tabBarIcon: ({ color, size }) => {
               return <FilmIcon color={color} size={size} />;
             },
+            tabBarStyle: {
+              backgroundColor: "#cda053",
+            },
           }}
         />
       </Tabs>
