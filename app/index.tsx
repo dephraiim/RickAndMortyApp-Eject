@@ -6,12 +6,14 @@ import {
   FlatList,
   Platform,
   Image,
+  ActivityIndicator,
+  SafeAreaView,
   useWindowDimensions,
 } from "react-native";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
-import { SafeAreaView } from "react-native-safe-area-context";
-
-import { sample } from "../data/sample";
+import {} from "react-native-safe-area-context";
+import { useQuery } from "@tanstack/react-query";
+import { getCharacters } from "../lib/api";
 
 const isIOS = Platform.OS === "ios";
 const isAndroid = Platform.OS === "android";
@@ -19,6 +21,11 @@ const isAndroid = Platform.OS === "android";
 export default function Page() {
   const status = ["Alive", "Dead", "Unknown"];
   const { width: w, height: h } = useWindowDimensions();
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["characters"],
+    queryFn: getCharacters,
+  });
 
   return (
     <SafeAreaView className="flex-1 bg-black">
@@ -75,46 +82,50 @@ export default function Page() {
           <Text className="text-white text-3xl font-semibold">Characters</Text>
         </View>
 
-        <FlatList
-          data={sample}
-          style={{ marginBottom: h * 0.2 }}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-                onPress={() => {
-                  console.log(item);
-                }}
-              >
-                <View className="m-2 mt-4">
-                  <Image
-                    style={{
-                      width: (w * 0.85) / 2,
-                      height: (w * 0.85) / 2,
-                      borderRadius: 10,
-                    }}
-                    source={{ uri: item.image }}
-                  />
-                  <View className="flex flex-row items-center justify-between mt-1">
-                    <Text className="text-white text-lg font-semibold">
-                      {item.name}
-                    </Text>
-                    <View
-                      className={`w-2 h-2 rounded-full ${
-                        item.status === "Alive"
-                          ? "bg-green-600"
-                          : item.status === "Dead"
-                          ? "bg-red-600"
-                          : "bg-gray-700"
-                      }`}
+        {isLoading && <ActivityIndicator color="#fff" size="large" />}
+
+        {!isLoading && data && !error && (
+          <FlatList
+            data={data.results}
+            style={{ marginBottom: h * 0.2 }}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log(item);
+                  }}
+                >
+                  <View className="m-2 mt-4">
+                    <Image
+                      style={{
+                        width: (w * 0.85) / 2,
+                        height: (w * 0.85) / 2,
+                        borderRadius: 10,
+                      }}
+                      source={{ uri: item.image }}
                     />
+                    <View className="flex flex-row items-center justify-between mt-1">
+                      <Text className="text-white text-lg font-semibold">
+                        {item.name}
+                      </Text>
+                      <View
+                        className={`w-2 h-2 rounded-full ${
+                          item.status === "Alive"
+                            ? "bg-green-600"
+                            : item.status === "Dead"
+                            ? "bg-red-600"
+                            : "bg-gray-700"
+                        }`}
+                      />
+                    </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-          showsVerticalScrollIndicator={false}
-          numColumns={2}
-        />
+                </TouchableOpacity>
+              );
+            }}
+            showsVerticalScrollIndicator={false}
+            numColumns={2}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
