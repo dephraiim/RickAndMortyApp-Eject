@@ -31,9 +31,13 @@ export interface Character {
   created: string;
 }
 
-export const getCharacters = async (): Promise<Data> => {
+export const getCharacters = async (page: number): Promise<Data> => {
+  const parsePage = page.toString();
+
   try {
-    const res = await fetch("https://rickandmortyapi.com/api/character");
+    const res = await fetch(
+      `https://rickandmortyapi.com/api/character?page=${parsePage}`
+    );
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }

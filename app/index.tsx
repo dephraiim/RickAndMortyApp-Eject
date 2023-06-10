@@ -10,22 +10,29 @@ import {
   SafeAreaView,
   useWindowDimensions,
 } from "react-native";
-import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
+import {
+  ArrowSmallLeftIcon,
+  ArrowSmallRightIcon,
+  MagnifyingGlassIcon,
+} from "react-native-heroicons/outline";
 import { useQuery } from "@tanstack/react-query";
 import { getCharacters } from "../lib/api";
 import defaultImage from "../assets/default.jpeg";
 import { truncateString } from "../lib/util";
+import { useState } from "react";
 
 const isIOS = Platform.OS === "ios";
 const isAndroid = Platform.OS === "android";
 
 export default function Page() {
   const status = ["Alive", "Dead", "Unknown"];
+  const [page, setPage] = useState<number>(1);
+
   const { width: w, height: h } = useWindowDimensions();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["characters"],
-    queryFn: getCharacters,
+    queryKey: ["characters", page],
+    queryFn: () => getCharacters(page),
   });
 
   return (
@@ -41,11 +48,11 @@ export default function Page() {
           className="text-white text-lg m-4 mr-2 p-4 py-2 flex-1 border-2 border-morty rounded-xl"
         />
         <TouchableOpacity
-          className={`border-2 border-morty p-2 rounded-xl mr-2 bg-morty ${
+          className={`border-2 border-morty p-2 rounded-xl mr-4 bg-morty ${
             isAndroid && "p-3"
           }`}
         >
-          <MagnifyingGlassIcon size={20} color="#000" />
+          <MagnifyingGlassIcon strokeWidth={3} size={20} color="#000" />
         </TouchableOpacity>
       </View>
 
@@ -83,10 +90,12 @@ export default function Page() {
 
         {isLoading && <ActivityIndicator color="#fff" size="large" />}
 
+        {/* TODO: Error Component */}
+
         {!isLoading && data && !error && (
           <FlatList
             data={data.results}
-            style={{ marginBottom: h * 0.2, marginTop: 10 }}
+            style={{ marginTop: 10 }}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
@@ -94,7 +103,7 @@ export default function Page() {
                     console.log(item);
                   }}
                 >
-                  <View className="m-2 mt-4">
+                  <View className="mr-3 ml-1 mt-4">
                     <Image
                       style={{
                         width: (w * 0.85) / 2,
@@ -106,7 +115,7 @@ export default function Page() {
                     />
                     <View className="flex flex-row items-center justify-between mt-1">
                       <Text className="text-white text-lg font-semibold">
-                        {truncateString(item.name, 17)}
+                        {truncateString(item.name, 15)}
                       </Text>
                       <View
                         className={`w-2 h-2 rounded-full ${
@@ -123,8 +132,41 @@ export default function Page() {
               );
             }}
             keyExtractor={(item) => item.id.toString() + item.name}
+            contentContainerStyle={{ paddingBottom: h * 0.3 }}
             showsVerticalScrollIndicator={false}
             numColumns={2}
+            ListFooterComponent={() => {
+              return (
+                <View className="flex flex-row justify-between mt-10 mx-2">
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (data.info.prev) {
+                        setPage(page - 1);
+                      }
+                    }}
+                  >
+                    <ArrowSmallLeftIcon
+                      color="#fff"
+                      size={30}
+                      strokeWidth={3}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (data.info.next) {
+                        setPage(page + 1);
+                      }
+                    }}
+                  >
+                    <ArrowSmallRightIcon
+                      color="#fff"
+                      size={30}
+                      strokeWidth={3}
+                    />
+                  </TouchableOpacity>
+                </View>
+              );
+            }}
           />
         )}
       </View>
