@@ -14,6 +14,7 @@ import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import { useQuery } from "@tanstack/react-query";
 import { getCharacters } from "../lib/api";
 import defaultImage from "../assets/default.jpeg";
+import { truncateString } from "../lib/util";
 
 const isIOS = Platform.OS === "ios";
 const isAndroid = Platform.OS === "android";
@@ -105,7 +106,7 @@ export default function Page() {
                     />
                     <View className="flex flex-row items-center justify-between mt-1">
                       <Text className="text-white text-lg font-semibold">
-                        {item.name}
+                        {truncateString(item.name, 17)}
                       </Text>
                       <View
                         className={`w-2 h-2 rounded-full ${
