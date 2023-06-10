@@ -18,7 +18,7 @@ const isAndroid = Platform.OS === "android";
 
 export default function Page() {
   const status = ["Alive", "Dead", "Unknown"];
-  const { width: w } = useWindowDimensions();
+  const { width: w, height: h } = useWindowDimensions();
 
   return (
     <SafeAreaView className="flex-1 bg-black">
@@ -77,7 +77,7 @@ export default function Page() {
 
         <FlatList
           data={sample}
-          className="mb-40"
+          style={{ marginBottom: h * 0.2 }}
           renderItem={({ item }) => {
             return (
               <TouchableOpacity
