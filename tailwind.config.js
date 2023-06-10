@@ -6,7 +6,7 @@ module.exports = {
       colors: {
         rick: "#0faec7",
         morty: "#52af38",
-        black: {
+        grey: {
           50: "#f7f7f7",
           100: "#e3e3e3",
           200: "#c8c8c8",
