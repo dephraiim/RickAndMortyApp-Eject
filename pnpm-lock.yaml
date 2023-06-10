@@ -43,7 +43,7 @@ dependencies:
     version: 2.9.0(react-native@0.71.8)(react@18.2.0)
   react-native-heroicons:
     specifier: ^3.2.0
-    version: 3.2.0(react-native-svg@13.9.0)(react@18.2.0)
+    version: 3.2.0(react-native-svg@13.4.0)(react@18.2.0)
   react-native-reanimated:
     specifier: ~2.14.4
     version: 2.14.4(@babel/core@7.22.5)(react-native@0.71.8)(react@18.2.0)
@@ -54,8 +54,8 @@ dependencies:
     specifier: ~3.20.0
     version: 3.20.0(react-native@0.71.8)(react@18.2.0)
   react-native-svg:
-    specifier: ^13.9.0
-    version: 13.9.0(react-native@0.71.8)(react@18.2.0)
+    specifier: 13.4.0
+    version: 13.4.0(react-native@0.71.8)(react@18.2.0)
   react-native-web:
     specifier: ~0.18.12
     version: 0.18.12(react-dom@18.2.0)(react@18.2.0)
@@ -6775,14 +6775,14 @@ packages:
     resolution: {integrity: sha512-1dVk9NwhoyKHCSxcrM6vY6cxmojeATsBobDicX0ZKr7DgUF2cBQRTKsimQFvzH8XhOVXyH8p4HyDSZNIFI8OlQ==}
     dev: false
 
-  /react-native-heroicons@3.2.0(react-native-svg@13.9.0)(react@18.2.0):
+  /react-native-heroicons@3.2.0(react-native-svg@13.4.0)(react@18.2.0):
     resolution: {integrity: sha512-M5jlhReLBALrmeKIjH1qgF3OCNphfw8xKpRlHpX8OH4zgsC3L6+Lt+c4/hNxSbxUIN2+s8XC0eK/NZLku14IzA==}
     peerDependencies:
       react: '>=16.8'
       react-native-svg: '>=9'
     dependencies:
       react: 18.2.0
-      react-native-svg: 13.9.0(react-native@0.71.8)(react@18.2.0)
+      react-native-svg: 13.4.0(react-native@0.71.8)(react@18.2.0)
     dev: false
 
   /react-native-reanimated@2.14.4(@babel/core@7.22.5)(react-native@0.71.8)(react@18.2.0):
@@ -6828,8 +6828,8 @@ packages:
       warn-once: 0.1.1
     dev: false
 
-  /react-native-svg@13.9.0(react-native@0.71.8)(react@18.2.0):
-    resolution: {integrity: sha512-Ey18POH0dA0ob/QiwCBVrxIiwflhYuw0P0hBlOHeY4J5cdbs8ngdKHeWC/Kt9+ryP6fNoEQ1PUgPYw2Bs/rp5Q==}
+  /react-native-svg@13.4.0(react-native@0.71.8)(react@18.2.0):
+    resolution: {integrity: sha512-B3TwK+H0+JuRhYPzF21AgqMt4fjhCwDZ9QUtwNstT5XcslJBXC0FoTkdZo8IEb1Sv4suSqhZwlAY6lwOv3tHag==}
     peerDependencies:
       react: '*'
       react-native: '*'
