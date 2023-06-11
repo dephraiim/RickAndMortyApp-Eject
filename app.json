@@ -5,6 +5,12 @@
       "bundler": "metro"
     },
     "name": "RickAndMorty",
-    "slug": "RickAndMorty"
+    "slug": "RickAndMorty",
+    "android": {
+      "package": "com.dephraiim.RickAndMorty"
+    },
+    "ios": {
+      "bundleIdentifier": "com.dephraiim.RickAndMorty"
+    }
   }
 }
